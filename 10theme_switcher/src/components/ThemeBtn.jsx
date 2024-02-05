@@ -1,8 +1,8 @@
 import React from "react";
-import UseContext from "../contexts/UseContext";
+import useThemeContext from "../contexts/ThemeContext";
 export default function ThemeBtn() {
     
-  const {theme,setTheme}=UseContext()
+  const {theme,setTheme}=useThemeContext()
   const changeTheme = (e)=>{
     setTheme(e.currentTarget.checked?'dark':'light')
   }

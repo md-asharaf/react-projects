@@ -1,7 +1,7 @@
 import { createContext, useContext} from 'react'
 const userContext=createContext(null)
-function UseMyContext(){
+function useMyContext(){
     return useContext(userContext)
 } 
 export const UserContextProvider=userContext.Provider
-export default UseMyContext
+export default useMyContext

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Login from './components/Login';
 import Profile from './components/Profile';
-import { UserContextProvider } from './contexts/useMyContext';
+import { UserContextProvider } from './contexts/MyContext';
 function App() {
   const [user,setUser]=useState({})
   return (

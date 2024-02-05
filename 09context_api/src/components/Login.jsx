@@ -1,7 +1,7 @@
 import React,{useState} from "react";
-import UseMyContext from "../contexts/useMyContext";
+import useMyContext from "../contexts/MyContext";
 function Login() {
-  const {setUser}=UseMyContext()
+  const {setUser}=useMyContext()
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
   const onSubmit=(e) => {
