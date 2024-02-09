@@ -1,16 +1,20 @@
-import { useState } from 'react'
-import {useDispatch} from 'react-redux'
-import { addTodo } from '../features/Slice';
-
-function AddTodo() {
-    const [input,setInput]=useState("")
-    const dispatch = useDispatch()
-    const addTodoHandler=(e) => {
-        e.preventDefault()
-        if(!input) return
-        dispatch(addTodo(input))
-        setInput('')
+import { useDispatch } from "react-redux";
+import { addTodo,removeTodo,updateTodo } from "../features/Slice";
+function AddTodo({ id,value, input, setInput, setValue,setDisabled }) {
+  const dispatch = useDispatch();
+  const addTodoHandler = (e) => {
+    e.preventDefault();
+    if (value === "Add Todo") {
+      if (!input) return;
+      dispatch(addTodo(input));
     }
+    else{
+      setDisabled(false)
+      setValue("Add Todo");
+      dispatch(!input?removeTodo(id):updateTodo({id,text:input}))
+    }
+    setInput("");
+  };
   return (
     <form onSubmit={addTodoHandler} className="space-x-3 mt-12">
       <input
@@ -24,9 +28,9 @@ function AddTodo() {
         type="submit"
         className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
       >
-        Add Todo
+        {value}
       </button>
     </form>
-    )
+  );
 }
-export default AddTodo
+export default AddTodo;
