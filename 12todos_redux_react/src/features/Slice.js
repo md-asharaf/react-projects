@@ -8,7 +8,6 @@ export const slice=createSlice(
         reducers:{
             addTodo:(state,action)=>{
                 state.todos.push({
-                    disabled:false,
                     id:nanoid(),
                     text:action.payload
                 })
@@ -17,7 +16,7 @@ export const slice=createSlice(
                 state.todos=state.todos.filter((todo)=>todo.id!==action.payload)
             },
             updateTodo:(state,action)=>{
-                state.todos=state.todos.map((todo)=>todo.id===action.payload.id?{...todo,text:action.payload.text,disabled:false}:todo)
+                state.todos=state.todos.map((todo)=>todo.id===action.payload.id?{...todo,text:action.payload.text}:todo)
             }
         }
     }

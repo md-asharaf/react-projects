@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeTodo } from "../features/Slice";
 import logo from '../assets/edit.png'
-function Todos({setInput,setValue,setId,disabled,setDisabled}) {
+function Todos({setInput,setValue,setId,id,disabled,setDisabled}) {
   const todos = useSelector((state) => state.todos);
   const dispatch = useDispatch();
   return (
@@ -10,14 +10,16 @@ function Todos({setInput,setValue,setId,disabled,setDisabled}) {
       <ul className="list-none">
         {todos.map((todo) => (
           <li
-            className="mt-4 flex justify-between items-center bg-zinc-800 px-4 py-2 rounded"
+            className={`mt-4 flex ${todo.id===id?"bg-gray-400":""} justify-between items-center bg-zinc-800 px-4 py-2 rounded`}
             key={todo.id}
           >
-            <div className="text-white">{todo.text}</div>
+            <div className={`text-white ${todo.id===id?"line-through text-gray-600":""}`}>{todo.text}</div>
             <div className="flex w-[15%] justify-between">
               <button
-                className={`rounded px-2 py-1 bg-green-400 ${disabled?'opacity-10':'opacity-100'}`}
+                disabled={disabled}
+                className={`rounded px-2 py-1 ${!disabled?"hover:bg-green-600 hover:scale-[0.9]":""} bg-green-500 ${disabled?'opacity-10':'opacity-100'}`}
                 onClick={() => {
+                  if(disabled) return
                   setDisabled(true)
                   setInput(todo.text)
                   setValue('Update Todo')
@@ -27,9 +29,10 @@ function Todos({setInput,setValue,setId,disabled,setDisabled}) {
               <img src={logo} alt="" className="h-[25px]" />
               </button>
               <button
+                disabled={disabled}
                 onClick={() => {
                   dispatch(removeTodo(todo.id))}}
-                className={`text-white bg-red-500 border-0 ${disabled?'opacity-10':'opacity-100'} py-1 px-2 focus:outline-none hover:bg-red-600 rounded text-md`}
+                className={`text-white bg-red-500 border-0 ${disabled?'opacity-10':'opacity-100'} py-1 px-2 focus:outline-none  ${!disabled?"hover:bg-red-600 hover:scale-[0.9]":""} rounded text-md`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

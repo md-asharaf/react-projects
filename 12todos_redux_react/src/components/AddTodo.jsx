@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { addTodo,removeTodo,updateTodo } from "../features/Slice";
-function AddTodo({ id,value, input, setInput, setValue,setDisabled }) {
+function AddTodo({ id,setId,value, input, setInput, setValue,setDisabled }) {
   const dispatch = useDispatch();
   const addTodoHandler = (e) => {
     e.preventDefault();
@@ -12,6 +12,7 @@ function AddTodo({ id,value, input, setInput, setValue,setDisabled }) {
       setDisabled(false)
       setValue("Add Todo");
       dispatch(!input?removeTodo(id):updateTodo({id,text:input}))
+      setId('')
     }
     setInput("");
   };

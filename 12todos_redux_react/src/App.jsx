@@ -8,8 +8,8 @@ function App() {
   const [disabled,setDisabled]=useState(false)
   return (
     <div className="w-1/2 mx-auto text-center">
-      <AddTodo id={id} value={value} input={input} setInput={setInput} setValue={setValue} setDisabled={setDisabled}/>
-      <Todos setInput={setInput} setValue={setValue} setId={setId} disabled={disabled} setDisabled={setDisabled}/>
+      <AddTodo id={id} setId={setId} value={value} input={input} setInput={setInput} setValue={setValue} setDisabled={setDisabled}/>
+      <Todos setInput={setInput} setValue={setValue} setId={setId} id={id} disabled={disabled} setDisabled={setDisabled}/>
     </div>
   );
 }
