@@ -1,15 +1,15 @@
 import React from "react";
 function Button({
-    childrenText,
+    children,
     className = "",
     type = "button",
-    onClickHandler = () => {},
+    onClickHandler,
     ...props
 }) {
     return (
         <input
             type={type}
-            value={childrenText}
+            value={children}
             onClick={onClickHandler}
             className={`${className}`}
             {...props}

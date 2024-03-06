@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Input, Button } from "./index";
+import { Input, Button ,Logo } from "./index";
 import { login } from "../store/index";
 import { authService } from "../appwrite/index";
 function Login() {
@@ -19,8 +19,8 @@ function Login() {
             if (!currentUserData) return;
             dispatch(login(currentUserData));
             navigate("/");
-        } catch (error) {
-            setError(error.message);
+        } catch (e) {
+            setError("ERROR::LOGIN::",e.message);
         }
     };
     return (
@@ -37,7 +37,7 @@ function Login() {
                     log into your account
                 </h2>
                 <p className="mt-2 text-center text-base text-black/60">
-                    Dont't have any account?
+                Don&apos;t have any account?
                     <Link to="/sign-up">Sign up</Link>
                 </p>
                 {error && (
