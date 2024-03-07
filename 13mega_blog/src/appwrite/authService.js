@@ -13,27 +13,22 @@ class AuthService {
 
   async createAccount({ name, email, password }) {
     try {
-      const userAccount = await this.account.create(
+      return await this.account.create(
         ID.unique(),
-        name,
         email,
-        password
+        password,
+        name
       );
-      if (userAccount) {
-        return this.login(email, password);
-      } else {
-        return userAccount;
-      }
     } catch (error) {
-      throw error;
+      console.log("ERROR::createAccount:: ",error.message);
     }
   }
 
   async login({ email, password }) {
     try {
-      await this.account.createEmailSession(email, password);
+      return await this.account.createEmailSession(email, password);
     } catch (error) {
-      console.log(error);
+      console.log("ERROR::login:: ",error.message);
     }
   }
 
@@ -41,15 +36,15 @@ class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      console.log(error);
+      console.log("ERROR::getCurrentUser:: ",error.message);
     }
     return null;
   }
   async logout() {
     try {
-      return await this.account.deleteSessions();
+      await this.account.deleteSessions();
     } catch (error) {
-      throw error;
+      console.log("ERROR::logout:: ",error.message);
     }
   }
 }

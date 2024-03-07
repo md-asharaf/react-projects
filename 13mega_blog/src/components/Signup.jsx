@@ -12,28 +12,30 @@ function Signup() {
         try {
             const response = await authService.createAccount(data);
             if (!response) return;
+            console.log("RESPONSE:",response)
             navigate("/login");
         } catch (error) {
             setError(error.message);
         }
     };
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
             <div
                 className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
             >
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
-                        <Logo width="70%" />
+                        <Logo width="60%" />
                     </span>
                 </div>
-            </div>
             <h2 className="text-center text-2xl font-bold leading-tight">
                 sign up your account
             </h2>
             <p className="mt-2 text-center text-base text-black/60">
                 already have an account?
-                <Link to="/login">Log in</Link>
+                <Link to="/login">
+                    <Button  className="px-2 py-1">Log In</Button>
+                </Link>
             </p>
             {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
             <form onSubmit={handleSubmit(onSubmitHandler)}>
@@ -54,9 +56,10 @@ function Signup() {
                             required: true,
                         })}
                     />
-                    <Button className="w-full" type="button">create account</Button>
+                    <Button className="w-full p-2" type="submit">Create Account</Button>
                 </div>
             </form>
+            </div>
         </div>
     );
 }

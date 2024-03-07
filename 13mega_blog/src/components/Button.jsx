@@ -4,6 +4,7 @@ function Button({
     className = "",
     type = "button",
     onClickHandler,
+    bgColor='blue',
     ...props
 }) {
     return (
@@ -11,7 +12,7 @@ function Button({
             type={type}
             value={children}
             onClick={onClickHandler}
-            className={`${className}`}
+            className={`shadow-md rounded-xl border-none bg-${bgColor}-700 hover: bg-${bgColor}-400 hover:scale-95 ${className}`}
             {...props}
         />
     );

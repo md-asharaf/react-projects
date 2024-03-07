@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Logo, Container } from "./index";
+import { Logo, Container, Button } from "./index";
 import { logout } from "../store/index";
 import { authService } from "../appwrite/index";
 function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const authStatus = useSelector((state) => (state.auth.status));
+    const authStatus = useSelector((state) => state.auth.status);
     const onClickHandler = () => {
         authService.logout().then(() => {
             dispatch(logout());
@@ -46,12 +46,12 @@ function Header() {
                 <div className="flex">
                     <nav className="mr-4">
                         <Link to="/">
-                            <Logo width="70%" />
+                            <Logo />
                         </Link>
                     </nav>
                 </div>
-                <ul className="flex ml-auto">
-                    {navItems.map((item) => 
+                <ul className="flex place-content-center gap-20 ">
+                    {navItems.map((item) =>
                         item.active ? (
                             <li key={item.name}>
                                 <button
@@ -67,9 +67,10 @@ function Header() {
                         <li>
                             <Button
                                 className="className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'"
-                                childrenText="Log out"
                                 onClickHandler={onClickHandler}
-                            />
+                            >
+                                Log Out
+                            </Button>
                         </li>
                     )}
                 </ul>

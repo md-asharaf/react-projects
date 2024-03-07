@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Input, Select, RTE} from "./index";
+import { Button, Input, Select, RTE } from "./index";
 import { postService } from "../appwrite/index";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -22,22 +22,27 @@ function PostForm({ post }) {
         const imageFile = data.image[0]
             ? await postService.uploadFile(data.image[0])
             : null;
+        console.log("file uploaded");
         if (post) {
             if (imageFile) {
                 await postService.deleteFile(post.image);
+                console.log("file deleted");
             }
             dbpost = await postService.updatePost(post.$id, {
                 ...data,
                 image: imageFile ? imageFile.$id : undefined,
             });
+            console.log("post updated");
         } else if (imageFile) {
             data.image = imageFile.$id;
             dbpost = await postService.createPost({
                 ...data,
                 userId: userData.$id,
             });
+            console.log("post created");
         }
         if (dbpost) navigate(`/post/${dbpost.$id}`);
+        console.log("navigated to post");
     };
 
     const slugTransform = useCallback((value) => {
@@ -64,11 +69,14 @@ function PostForm({ post }) {
     }, [watch, setValue, slugTransform]);
 
     return (
-        <form className="flex flex-wrap" onSubmit={handleSubmit(onSubmitHandler)}>
+        <form
+            className="flex flex-wrap"
+            onSubmit={handleSubmit(onSubmitHandler)}
+        >
             <div className="w-2/3 px-2">
                 <Input
-                className="mb-4"
-                    label="title"
+                    className="mb-4"
+                    label="title:"
                     name="title"
                     placeholder="enter title: "
                     {...register("title", {
@@ -77,8 +85,8 @@ function PostForm({ post }) {
                 />
 
                 <Input
-                className="mb-4"
-                    label="slug"
+                    className="mb-4"
+                    label="slug:"
                     name="slug"
                     placeholder="enter slug: "
                     {...register("slug", {
@@ -91,7 +99,7 @@ function PostForm({ post }) {
                     }
                 />
                 <RTE
-                    label="Editor"
+                    label="Editor:"
                     control={control}
                     name="RTE"
                     defaultValue={getValues("content")}
@@ -100,8 +108,7 @@ function PostForm({ post }) {
 
             <div className="w-1/3 px-2">
                 <Input
-                className="mb-4"
-
+                    className="mb-4"
                     label="Featured image: "
                     placeholder="featured image"
                     type="file"
@@ -119,17 +126,16 @@ function PostForm({ post }) {
                     </div>
                 )}
                 <Select
-                className="mb-4"
-
+                    className="mb-4"
                     options={["active", "inactive"]}
-                    label="status"
+                    label="status:"
                     {...register("status", {
                         required: true,
                     })}
                 />
                 <Button
                     type="submit"
-                    label="submit"
+                    label="Submit: "
                     className={`w-full ${post ? "bg-green-500" : ""}`}
                 >
                     {post ? "update" : "submit"}
