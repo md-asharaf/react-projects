@@ -34,12 +34,13 @@ function Login() {
                     </span>
                 </div>
                 <h2 className="text-center text-2xl font-bold leading-tight">
-                    log into your account
+                    Log into your account
                 </h2>
                 <p className="mt-2 text-center text-base text-black/60">
                     Don&apos;t have any account?
+                    <span> </span>
                     <Link to="/signup">
-                        <Button className="px-2 py-1">Sign Up</Button>
+                        <Button className="px-2 py-1 bg-gray-600 text-white">Sign Up</Button>
                     </Link>
                 </p>
                 {error && (
@@ -63,7 +64,7 @@ function Login() {
                                 required: true,
                             })}
                         />
-                        <Button type="submit" className="w-full p-2">
+                        <Button type="submit" className="w-full p-2 bg-blue-500">
                             Sign In
                         </Button>
                     </div>

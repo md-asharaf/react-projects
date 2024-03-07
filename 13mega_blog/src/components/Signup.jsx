@@ -29,12 +29,13 @@ function Signup() {
                     </span>
                 </div>
             <h2 className="text-center text-2xl font-bold leading-tight">
-                sign up your account
+                Sign up your account
             </h2>
             <p className="mt-2 text-center text-base text-black/60">
                 already have an account?
+                <span> </span>
                 <Link to="/login">
-                    <Button  className="px-2 py-1">Log In</Button>
+                    <Button  className="px-2 py-1 bg-gray-600 text-white">Log In</Button>
                 </Link>
             </p>
             {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
@@ -56,7 +57,7 @@ function Signup() {
                             required: true,
                         })}
                     />
-                    <Button className="w-full p-2" type="submit">Create Account</Button>
+                    <Button className="w-full p-2 bg-blue-500" type="submit">Create Account</Button>
                 </div>
             </form>
             </div>

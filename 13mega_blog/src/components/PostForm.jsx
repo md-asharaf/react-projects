@@ -136,7 +136,7 @@ function PostForm({ post }) {
                 <Button
                     type="submit"
                     label="Submit: "
-                    className={`w-full ${post ? "bg-green-500" : ""}`}
+                    className={`p-2 w-full  ${post ? "bg-green-500" : "bg-blue-500"}`}
                 >
                     {post ? "update" : "submit"}
                 </Button>
