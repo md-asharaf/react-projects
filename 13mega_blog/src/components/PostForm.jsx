@@ -18,40 +18,32 @@ function PostForm({ post }) {
         });
 
     const onSubmitHandler = async (data) => {
-        let dbpost;
         const imageFile = data.image[0]
             ? await postService.uploadFile(data.image[0])
             : null;
-        console.log("file uploaded");
         if (post) {
             if (imageFile) {
                 await postService.deleteFile(post.image);
-                console.log("file deleted");
             }
-            dbpost = await postService.updatePost(post.$id, {
+            const dbpost = await postService.updatePost(post.$id, {
                 ...data,
                 image: imageFile ? imageFile.$id : undefined,
             });
-            console.log("post updated");
+            if (dbpost) navigate(`/post/${dbpost.$id}`);
         } else if (imageFile) {
-            data.image = imageFile.$id;
-            dbpost = await postService.createPost({
+            data = {
                 ...data,
+                image: imageFile.$id,
                 userId: userData.$id,
-            });
-            console.log("post created");
+            };
+            const dbpost = await postService.createPost(data);
+            if (dbpost) navigate(`/post/${dbpost.$id}`);
         }
-        if (dbpost) navigate(`/post/${dbpost.$id}`);
-        console.log("navigated to post");
     };
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === "string")
-            return value
-                .trim()
-                .toLowerCase()
-                .replace(/^[A-Za-z0-9\d]+/g, "-")
-                .replace(/\s/g, "-");
+            return value.trim().toLowerCase().replace(/\s/g, "-");
         return "";
     }, []);
 
@@ -85,6 +77,7 @@ function PostForm({ post }) {
                 />
 
                 <Input
+                    disabled
                     className="mb-4"
                     label="slug:"
                     name="slug"
@@ -92,16 +85,11 @@ function PostForm({ post }) {
                     {...register("slug", {
                         required: true,
                     })}
-                    onInput={(e) =>
-                        setValue("slug", slugTransform(e.target.value), {
-                            shouldValidate: true,
-                        })
-                    }
                 />
                 <RTE
                     label="Editor:"
                     control={control}
-                    name="RTE"
+                    name="content"
                     defaultValue={getValues("content")}
                 />
             </div>
@@ -136,7 +124,9 @@ function PostForm({ post }) {
                 <Button
                     type="submit"
                     label="Submit: "
-                    className={`p-2 w-full  ${post ? "bg-green-500" : "bg-blue-500"}`}
+                    className={`p-2 w-full  ${
+                        post ? "bg-green-500" : "bg-blue-500"
+                    }`}
                 >
                     {post ? "update" : "submit"}
                 </Button>

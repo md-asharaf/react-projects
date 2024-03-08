@@ -8,22 +8,41 @@ function RTE({ name, control, label, defaultValue = "" }) {
             <Controller
                 name={name || "content"}
                 control={control}
-                rules={{ required: true }}
-                render={({ field: { onchange } }) => (
+                render={({ field: { onChange } }) => (
                     <Editor
                         apiKey="z2szm6j9vut0jvzu4x18u2588xzqkneezbk678s159ufrbic"
+                        initialValue={defaultValue}
                         init={{
                             height: 500,
                             menubar: true,
-                            plugins:
-                                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss",
+                            plugins: [
+                                "image",
+                                "advlist",
+                                "autolink",
+                                "lists",
+                                "link",
+                                "image",
+                                "charmap",
+                                "preview",
+                                "anchor",
+                                "searchreplace",
+                                "visualblocks",
+                                "code",
+                                "fullscreen",
+                                "insertdatetime",
+                                "media",
+                                "table",
+                                "code",
+                                "help",
+                                "wordcount",
+                                "anchor",
+                            ],
                             toolbar:
-                                "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                                "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
                             content_style:
                                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                         }}
-                        initialValue={defaultValue}
-                        onEditorChange={onchange}
+                        onEditorChange={onChange}
                     />
                 )}
             />

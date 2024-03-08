@@ -1,4 +1,4 @@
-import { Client, Databases, Storage, ID, Query } from "appwrite";
+import { Client, Databases, Storage, ID } from "appwrite";
 import { conf } from "./index";
 class Service {
     client;
@@ -27,6 +27,7 @@ class Service {
                     image,
                     userId,
                     status,
+                    slug
                 }
             );
         } catch (error) {
@@ -83,7 +84,7 @@ class Service {
         try {
             return await this.bucket.createFile(conf.appwriteBucketId, ID.unique(), file)
         } catch (error) {
-            console.log("Appwrite::uploadFile::error::", error);
+            console.log("Appwrite::uploadFile::error::", error.message);
             return null;
         }
     }

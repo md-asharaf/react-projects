@@ -16,6 +16,7 @@ function Login() {
             const session = await authService.login(data);
             if (!session) return;
             const currentUserData = await authService.getCurrentUser();
+            console.log(currentUserData);
             if (!currentUserData) return;
             dispatch(login(currentUserData));
             navigate("/");
@@ -40,7 +41,9 @@ function Login() {
                     Don&apos;t have any account?
                     <span> </span>
                     <Link to="/signup">
-                        <Button className="px-2 py-1 bg-gray-600 text-white">Sign Up</Button>
+                        <Button className="px-2 py-1 bg-gray-600 text-white">
+                            Sign Up
+                        </Button>
                     </Link>
                 </p>
                 {error && (
@@ -64,7 +67,10 @@ function Login() {
                                 required: true,
                             })}
                         />
-                        <Button type="submit" className="w-full p-2 bg-blue-500">
+                        <Button
+                            type="submit"
+                            className="w-full p-2 bg-blue-500"
+                        >
                             Sign In
                         </Button>
                     </div>

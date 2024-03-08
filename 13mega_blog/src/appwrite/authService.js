@@ -20,7 +20,7 @@ class AuthService {
         name
       );
     } catch (error) {
-      console.log("ERROR::createAccount:: ",error.message);
+      console.log("ERROR::createAccount:: ", error.message);
     }
   }
 
@@ -28,7 +28,7 @@ class AuthService {
     try {
       return await this.account.createEmailSession(email, password);
     } catch (error) {
-      console.log("ERROR::login:: ",error.message);
+      console.log("ERROR::login:: ", error.message);
     }
   }
 
@@ -36,15 +36,16 @@ class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      console.log("ERROR::getCurrentUser:: ",error.message);
+      console.log("ERROR::getCurrentUser:: ", error.message);
+      return null;
     }
-    return null;
+
   }
   async logout() {
     try {
       await this.account.deleteSessions();
     } catch (error) {
-      console.log("ERROR::logout:: ",error.message);
+      console.log("ERROR::logout:: ", error.message);
     }
   }
 }
