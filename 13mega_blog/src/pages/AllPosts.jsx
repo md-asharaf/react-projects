@@ -7,11 +7,10 @@ function AllPosts() {
     const navigate = useNavigate();
     useEffect(() => {
         postService.getPosts().then((allPosts) => {
-            if (allPosts) setPosts(allPosts.documents);
+            if (allPosts) setPosts(allPosts.documents)
             else navigate("/");
-        });
+        })
     }, []);
-
     return (posts.length==0)?(
         <div className="w-full py-8 mt-4 text-center">
             <Container>
@@ -27,10 +26,10 @@ function AllPosts() {
     ):(
         <div className="w-full py-8">
             <Container>
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap rounded-xl">
                     {posts.map((post) => (
                         <div className="p-2 w-1/4" key={post.$id}>
-                            <PostCard post={post} />
+                            <PostCard {...post} />
                         </div>
                     ))}
                 </div>

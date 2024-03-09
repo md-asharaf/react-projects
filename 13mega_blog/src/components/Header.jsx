@@ -41,21 +41,19 @@ function Header() {
     ];
 
     return (
-        <header className="py-3 shadow bg-gray-500">
+        <header className="py-3 shadow-2xl bg-[#19191C] text-white ">
             <Container>
-                <div className="flex">
-                    <nav className="mr-4">
-                        <Link to="/">
-                            <Logo />
-                        </Link>
-                    </nav>
-                </div>
-                <ul className="flex place-content-center gap-20 ">
+                <nav className="mr-4 absolute">
+                    <Link to="/">
+                        <Logo width="50px" />
+                    </Link>
+                </nav>
+                <ul className="flex place-content-center gap-20">
                     {navItems.map((item) =>
                         item.active ? (
                             <li key={item.name}>
                                 <button
-                                    className="inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
+                                    className="inline-bock px-6 py-2 duration-200 hover:bg-white hover:text-black rounded-full"
                                     onClick={() => navigate(item.slug)}
                                 >
                                     {item.name}
@@ -66,7 +64,7 @@ function Header() {
                     {authStatus && (
                         <li>
                             <Button
-                                className="className='inline-bock px-6 py-2 duration-200 bg-pink-500 rounded-full'"
+                                className="absolute right-8 className='inline-bock px-6 py-2 duration-200 bg-pink-600 rounded-full'"
                                 onClickHandler={onClickHandler}
                             >
                                 Log Out

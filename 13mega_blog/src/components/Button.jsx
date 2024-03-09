@@ -11,7 +11,7 @@ function Button({
             type={type}
             value={children}
             onClick={onClickHandler}
-            className={`shadow-md rounded-xl border-none hover:scale-95 hover:opacity-90 ${className}`}
+            className={` rounded-[50px] hover:scale-95 hover:opacity-90 ${className}`}
             {...props}
         />
     );

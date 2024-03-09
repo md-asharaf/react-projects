@@ -15,20 +15,13 @@ class Service {
 
     //post service methods  
 
-    async createPost({ slug, content, title, status, image, userId }) {
+    async createPost(slug, { content, title, status, imageUrl, userId }) {
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
-                {
-                    content,
-                    title,
-                    image,
-                    userId,
-                    status,
-                    slug
-                }
+                { content, title, status, imageUrl, userId }
             );
         } catch (error) {
             console.log("Appwrite::createPost::error::", error);
@@ -45,15 +38,9 @@ class Service {
         }
     }
 
-    async updatePost(slug, { content, title, status, image, userId }) {
+    async updatePost(slug, { content, title, status, imageUrl, userId }) {
         try {
-            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, slug, {
-                title,
-                content,
-                status,
-                image,
-                userId
-            })
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, slug, { content, title, status, imageUrl, userId })
         } catch (error) {
             console.log("Appwrite::updateDocument::error::", error);
             return null
@@ -74,8 +61,8 @@ class Service {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteCollectionId, queries);
         } catch (error) {
             console.log("Appwrite::getPosts::error::", error);
+            return null
         }
-        return null
     }
 
     //file service methods

@@ -4,7 +4,7 @@ import { Button, Input, Select, RTE } from "./index";
 import { postService } from "../appwrite/index";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-function PostForm({ post }) {
+function PostForm({ post, disabled = false }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
     const { register, handleSubmit, setValue, getValues, control, watch } =
@@ -12,33 +12,34 @@ function PostForm({ post }) {
             defaultValues: {
                 title: post?.title || "",
                 status: post?.status || "active",
-                slug: post?.slug || "",
+                slug: post?.$id || "",
                 content: post?.content || "",
             },
         });
 
     const onSubmitHandler = async (data) => {
+        let dbpost = null;
         const imageFile = data.image[0]
             ? await postService.uploadFile(data.image[0])
             : null;
         if (post) {
             if (imageFile) {
-                await postService.deleteFile(post.image);
+                await postService.deleteFile(post.imageUrl);
             }
-            const dbpost = await postService.updatePost(post.$id, {
+            dbpost = await postService.updatePost(post.$id, {
                 ...data,
-                image: imageFile ? imageFile.$id : undefined,
+                imageUrl: imageFile ? imageFile.$id : undefined,
             });
-            if (dbpost) navigate(`/post/${dbpost.$id}`);
         } else if (imageFile) {
             data = {
                 ...data,
-                image: imageFile.$id,
+                imageUrl: imageFile.$id,
                 userId: userData.$id,
             };
-            const dbpost = await postService.createPost(data);
-            if (dbpost) navigate(`/post/${dbpost.$id}`);
+            dbpost = await postService.createPost(data.slug, data);
+            console.log(dbpost);
         }
+        if (dbpost) navigate(`/posts/${dbpost.$id}`);
     };
 
     const slugTransform = useCallback((value) => {
@@ -49,7 +50,7 @@ function PostForm({ post }) {
 
     useEffect(() => {
         const subscription = watch((value, { name }) => {
-            if (name == "title")
+            if (!disabled && name == "title")
                 setValue(
                     "slug",
                     slugTransform(value.title, {
@@ -67,6 +68,7 @@ function PostForm({ post }) {
         >
             <div className="w-2/3 px-2">
                 <Input
+                    defaultValue={getValues("title")}
                     className="mb-4"
                     label="title:"
                     name="title"
@@ -77,7 +79,8 @@ function PostForm({ post }) {
                 />
 
                 <Input
-                    disabled
+                    disabled={disabled}
+                    defaultValue={getValues("slug")}
                     className="mb-4"
                     label="slug:"
                     name="slug"
@@ -85,6 +88,11 @@ function PostForm({ post }) {
                     {...register("slug", {
                         required: true,
                     })}
+                    onInput={(e) => {
+                        setValue("slug", slugTransform(e.currentTarget.value), {
+                            shouldValidate: true,
+                        });
+                    }}
                 />
                 <RTE
                     label="Editor:"
@@ -108,7 +116,7 @@ function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={postService.getFilePreview(post.image)}
+                            src={postService.getFilePreview(post.imageUrl)}
                             alt={post.title}
                         />
                     </div>
@@ -124,7 +132,7 @@ function PostForm({ post }) {
                 <Button
                     type="submit"
                     label="Submit: "
-                    className={`p-2 w-full  ${
+                    className={`mt-10 p-2 w-full text-white ${
                         post ? "bg-green-500" : "bg-blue-500"
                     }`}
                 >

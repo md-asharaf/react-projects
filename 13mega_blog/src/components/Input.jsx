@@ -1,7 +1,7 @@
 import React, { useId } from "react";
 const Input = React.forwardRef(
     (
-        { type = "text", className = "", placeholder = "", label, ...props },
+        { type = "text", className = "", placeholder = "",defaultValue="", label, ...props },
         ref
     ) => {
         const id = useId();
@@ -13,6 +13,7 @@ const Input = React.forwardRef(
                     </label>
                 )}
                 <input
+                    defaultValue={defaultValue}
                     id={id}
                     type={type}
                     placeholder={placeholder}

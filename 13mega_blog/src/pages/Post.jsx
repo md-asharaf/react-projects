@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button } from "../components/index";
+import { Button ,Container } from "../components/index";
 import { postService } from "../appwrite/index";
 import parse from "html-react-parser";
 function Post() {
@@ -11,8 +11,8 @@ function Post() {
     const userData = useSelector((state) => state.auth.userData);
     useEffect(() => {
         if (slug) {
-            postService.getPost(slug).then((postt) => {
-                if (postt) setPost(postt);
+            postService.getPost(slug).then((post) => {
+                if (post) setPost(post);
                 else navigate("/");
             });
         } else navigate("/");
@@ -20,7 +20,7 @@ function Post() {
     const deletePost = () => {
         postService.deletePost(post.$id).then((status) => {
             if (status) {
-                postService.deleteFile(post.image);
+                postService.deleteFile(post.imageUrl);
                 navigate("/");
             }
         });
@@ -31,26 +31,26 @@ function Post() {
             <Container>
                 <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
-                        src={postService.getFilePreview(post.image)}
+                        src={postService.getFilePreview(post.imageUrl)}
                         alt={post.title}
                         className="rounded-xl"
                     />
 
                     {author && (
-                        <div className="absolute right-6 top-6">
+                        <div className="absolute right-6 top-14">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
+                                <Button  className="mr-4 py-2 px-10 bg-blue-700 text-white">
                                     Edit
                                 </Button>
                             </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
+                            <Button className="bg-white text-blue-700 border-gray-500 border-[1.5px] py-2 px-7" onClick={deletePost}>
                                 Delete
                             </Button>
                         </div>
                     )}
                 </div>
                 <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
+                    <h1 className="text-2xl underline font-bold">{post.title} :</h1>
                 </div>
                 <div className="browser-css">{parse(post.content)}</div>
             </Container>
