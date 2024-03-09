@@ -35,15 +35,15 @@ function Signup() {
                     already have an account?
                     <span> </span>
                     <Link to="/login">
-                        <Button className="px-2 py-1 bg-gray-600 text-white">
+                        <Button className="px-8 py-1 bg-white border-gray-600 border-[1.5px] text-blue-600">
                             Log In
                         </Button>
                     </Link>
                 </p>
                 {error && (
-                    <p className="text-red-600 mt-8 text-center">{error}</p>
+                    <p className="text-red-600 text-center">{error}</p>
                 )}
-                <form onSubmit={handleSubmit(onSubmitHandler)}>
+                <form className='mt-8' onSubmit={handleSubmit(onSubmitHandler)}>
                     <div className="space-y-5">
                         <Input
                             label="Email: "

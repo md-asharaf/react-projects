@@ -41,7 +41,7 @@ function Login() {
                     Don&apos;t have any account?
                     <span> </span>
                     <Link to="/signup">
-                        <Button className="px-2 py-1 bg-gray-600 text-white">
+                        <Button className="px-6 py-1 bg-white border-gray-600 border-[1.5px] text-blue-600">
                             Sign Up
                         </Button>
                     </Link>
