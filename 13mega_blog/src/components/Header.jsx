@@ -29,11 +29,6 @@ function Header() {
             active: !authStatus,
         },
         {
-            name: "All Posts",
-            slug: "/all-posts",
-            active: authStatus,
-        },
-        {
             name: "Add Post",
             slug: "/add-post",
             active: authStatus,
@@ -41,14 +36,14 @@ function Header() {
     ];
 
     return (
-        <header className="py-3 shadow-2xl bg-[#19191C] text-white ">
+        <header className="py-3 shadow-2xl bg-[#19191C] text-white">
             <Container>
                 <nav className="mr-4 absolute">
                     <Link to="/">
                         <Logo width="50px" />
                     </Link>
                 </nav>
-                <ul className="flex place-content-center gap-20">
+                <ul className="flex place-content-center gap-28">
                     {navItems.map((item) =>
                         item.active ? (
                             <li key={item.name}>
@@ -64,7 +59,7 @@ function Header() {
                     {authStatus && (
                         <li>
                             <Button
-                                className="absolute right-8 className='inline-bock px-6 py-2 duration-200 bg-pink-600 rounded-full'"
+                                className="absolute right-20 className='inline-bock px-6 py-2 duration-200 bg-pink-600 rounded-full'"
                                 onClickHandler={onClickHandler}
                             >
                                 Log Out

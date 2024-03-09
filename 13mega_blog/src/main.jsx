@@ -6,7 +6,6 @@ import {
     Login,
     AddPost,
     EditPost,
-    AllPosts,
     Signup,
     Post,
 } from "./pages/index";
@@ -37,15 +36,6 @@ const router = createBrowserRouter([
                 element: (
                     <AuthLayout authentication={false}>
                         <Signup />
-                    </AuthLayout>
-                ),
-            },
-            {
-                path: "/all-posts",
-                element: (
-                    <AuthLayout authentication>
-                        {" "}
-                        <AllPosts />
                     </AuthLayout>
                 ),
             },
