@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Container, PostCard } from "../components/index";
 import { postService } from "../appwrite/index";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useSelector } from "react-router-dom";
 function Home() {
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
+    const authStatus=useSelector(state=>state.auth.status)
     useEffect(() => {
+        if(!authStatus) return
         postService.getPosts().then((allPosts) => {
             if (allPosts) setPosts(allPosts.documents)
             else navigate("/");

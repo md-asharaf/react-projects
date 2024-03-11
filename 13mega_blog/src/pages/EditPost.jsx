@@ -7,6 +7,7 @@ function EditPost() {
     const navigate = useNavigate();
     const { slug } = useParams();
     useEffect(() => {
+        if(!slug) return
         postService.getPost(slug).then((post) => {
             if (post) setPost(post);
             else navigate("/");
