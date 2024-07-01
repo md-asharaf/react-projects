@@ -5,10 +5,11 @@ function Todos() {
     const dispatch = useDispatch();
     const todos = useSelector((state) => state.todos);
     const id = useSelector((state) => state.id);
-    console.log(todos);
+    if (todos.length === 0)
+        return <div className="my-4 text-white text-2xl">No Todos</div>;
     return (
         <>
-            <div className="my-4 text-pink-500 text-4xl border-b-[1px] border-b-gray-400 pb-4 mb-8">
+            <div className="my-4 text-white text-4xl border-b-[1px] border-b-gray-500 pb-4 mb-8">
                 TODOS
             </div>
             <ul className="list-none">
