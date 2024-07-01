@@ -3,7 +3,7 @@ import { removeTodo, updateTodo, setId } from "../features/Slice";
 import logo from "../assets/edit.png";
 function Todos() {
     const dispatch = useDispatch();
-    const todos = useSelector((state) => state.todos);
+    let todos = useSelector((state) => state.todos);
     const id = useSelector((state) => state.id);
     if (todos.length === 0)
         return <div className="my-4 text-white text-2xl">No Todos</div>;

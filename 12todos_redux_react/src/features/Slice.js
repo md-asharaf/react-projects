@@ -9,6 +9,7 @@ export const slice = createSlice(
         },
         reducers: {
             addTodo: (state, action) => {
+                if (!action.payload) return;
                 state.todos.push({
                     id: nanoid(),
                     text: action.payload,
