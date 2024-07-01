@@ -1,58 +1,79 @@
 import { useSelector, useDispatch } from "react-redux";
-import { removeTodo } from "../features/Slice";
+import { removeTodo, updateTodo, setId } from "../features/Slice";
 import logo from "../assets/edit.png";
-function Todos({ setInput, setValue, setId, id, disabled, setDisabled }) {
-    const todos = useSelector((state) => state.todos);
+function Todos() {
     const dispatch = useDispatch();
+    const todos = useSelector((state) => state.todos);
+    const id = useSelector((state) => state.id);
+    console.log(todos);
     return (
         <>
-            <div className="my-4 text-pink-500">Todos</div>
+            <div className="my-4 text-pink-500 text-4xl border-b-[1px] border-b-gray-400 pb-4 mb-8">
+                TODOS
+            </div>
             <ul className="list-none">
                 {todos.map((todo) => (
                     <li
-                        className={`mt-4 flex ${
-                            todo.id === id ? "bg-gray-400" : ""
-                        } justify-between items-center bg-zinc-800 px-4 py-2 rounded`}
+                        className={`bg-zinc-800 mt-4 flex ${
+                            todo.id === id ? "bg-red-600" : ""
+                        } justify-between items-center  px-4 py-2 rounded`}
                         key={todo.id}
                     >
-                        <div
-                            className={`text-white ${
-                                todo.id === id
-                                    ? "line-through text-gray-600"
-                                    : ""
-                            }`}
-                        >
-                            {todo.text}
-                        </div>
-                        <div className="flex w-[15%] justify-between">
-                            <button
-                                disabled={disabled}
-                                className={`rounded px-2 py-1 ${
-                                    !disabled
-                                        ? "hover:bg-green-600 hover:scale-[0.9]"
+                        <div>
+                            <span
+                                className={`text-white ${
+                                    todo.id == id || todo.completed
+                                        ? "line-through text-gray-600"
                                         : ""
-                                } bg-green-500 ${
-                                    disabled ? "opacity-10" : "opacity-100"
+                                }`}
+                            >
+                                {todo.text}
+                            </span>
+                            <span className="ml-4 text-green-500 text-sm">
+                                {todo.completed && "completed"}
+                            </span>
+                        </div>
+                        <div className="flex w-1/2 lg:w-1/4 justify-between">
+                            <input
+                                disabled={id}
+                                type="checkbox"
+                                defaultChecked={todo.completed}
+                                onChange={() =>
+                                    dispatch(
+                                        updateTodo({
+                                            id: todo.id,
+                                            completed: !todo.completed,
+                                        })
+                                    )
+                                }
+                                className="h-8 w-8"
+                            />
+                            <button
+                                disabled={id}
+                                className={`rounded px-2 py-1 ${
+                                    todo.id == id
+                                        ? "bg-red-400"
+                                        : "bg-green-400"
+                                } ${
+                                    id
+                                        ? "opacity-50"
+                                        : "hover:bg-green-600 hover:scale-[0.9] opacity-100"
                                 }`}
                                 onClick={() => {
-                                    if (disabled) return;
-                                    setDisabled(true);
-                                    setInput(todo.text);
-                                    setValue("Update Todo");
-                                    setId(todo.id);
+                                    dispatch(setId(todo.id));
                                 }}
                             >
                                 <img src={logo} alt="" className="h-[25px]" />
                             </button>
                             <button
-                                disabled={disabled}
+                                disabled={id}
                                 onClick={() => {
                                     dispatch(removeTodo(todo.id));
                                 }}
                                 className={`text-white bg-red-500 border-0 ${
-                                    disabled ? "opacity-10" : "opacity-100"
+                                    id ? "opacity-50" : "opacity-100"
                                 } py-1 px-2 focus:outline-none  ${
-                                    !disabled
+                                    !id
                                         ? "hover:bg-red-600 hover:scale-[0.9]"
                                         : ""
                                 } rounded text-md`}
